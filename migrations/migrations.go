@@ -25,9 +25,11 @@ func NewMigrator(dbDNS string) (Migrator, error) {
 	if err != nil {
 		return Migrator{}, err
 	}
-	migrator, err := migrate.NewMigratorEx(context.Background(), conn, versionTable, &migrate.MigratorOptions{
-		DisableTx: false,
-	})
+	migrator, err := migrate.NewMigratorEx(
+		context.Background(), conn, versionTable,
+		&migrate.MigratorOptions{
+			DisableTx: false,
+		})
 	if err != nil {
 		return Migrator{}, err
 	}
@@ -63,7 +65,10 @@ func (m Migrator) Info() (int32, int32, string, error) {
 		if cur {
 			indicator = "->"
 		}
-		info = info + fmt.Sprintf("%2s %3d %s\n", indicator, thisMigration.Sequence, thisMigration.Name)
+		info = info + fmt.Sprintf(
+			"%2s %3d %s\n",
+			indicator,
+			thisMigration.Sequence, thisMigration.Name)
 	}
 
 	return version, last, info, nil
